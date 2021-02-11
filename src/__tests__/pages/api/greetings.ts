@@ -12,4 +12,9 @@ describe("/api/greetings", () => {
 		const { status } = await callApiHandler(greetingsHandler, { method: "GET" });
 		expect(status).toBe(400);
 	});
+
+	test("responds 405 to POST", async () => {
+		const { status } = await callApiHandler(greetingsHandler, { method: "POST" });
+		expect(status).toBe(405);
+	});
 });

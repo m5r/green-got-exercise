@@ -6,6 +6,19 @@ type ResponseBody = string;
 type Response = ResponseBody | ApiError;
 
 export default async function greetings(req: NextApiRequest, res: NextApiResponse<Response>) {
+	if (req.method !== "GET") {
+		const statusCode = 405;
+		const apiError: ApiError = {
+			statusCode,
+			errorMessage: `Method ${req.method} Not Allowed`,
+		};
+		console.error(apiError);
+
+		res.setHeader("Allow", ["GET"]);
+		res.status(statusCode).send(apiError);
+		return;
+	}
+
 	const firstName = req.query.first_name;
 	if (!firstName) {
 		const statusCode = 400;
