@@ -6,6 +6,7 @@ describe("/api/create_user", () => {
 		const body = { firstName: "Mokhtar", lastName: "Mial" };
 		const response = await callApiHandler(createUserHandler, { method: "POST", body });
 		expect(response.status).toBe(200);
+		expect(await response.json()).toEqual({ firstName: "MOKHTAR", lastName: "MIAL" });
 	});
 
 	test("responds 400 to POST with malformed body", async () => {

@@ -23,8 +23,7 @@ export default async function createUser(req: NextApiRequest, res: NextApiRespon
 		return;
 	}
 
-	const body = req.body;
-	if (!isValidBody(body)) {
+	if (!isValidBody(req.body)) {
 		const statusCode = 400;
 		const apiError: ApiError = {
 			statusCode,
@@ -36,7 +35,12 @@ export default async function createUser(req: NextApiRequest, res: NextApiRespon
 		return;
 	}
 
-	res.status(200).end();
+	const response: ResponseBody = {
+		firstName: req.body.firstName.toUpperCase(),
+		lastName: req.body.lastName.toUpperCase(),
+	};
+
+	res.status(200).send(response);
 }
 
 function isValidBody(body: any): body is RequestBody {
